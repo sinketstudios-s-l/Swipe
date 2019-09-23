@@ -1,0 +1,125 @@
+ion-content, ion-app{
+    --background: #ad5389;  /* fallback for old browsers */
+    --background: -webkit-linear-gradient(to top, #511670, #ad5389); 
+    --background: linear-gradient(to top, #511670, #ad5389); 
+    width: 100%;
+    height: 100vh;
+    --color: #fff;
+    --overflow: hidden;
+}
+
+.headers{
+    font-size: 25px;
+}
+
+.formBuilder {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+    animation-duration: 2s;
+}
+
+
+@keyframes fadeInOpacity {
+	0% {
+        top: 20%;
+		opacity: 0;
+    }
+	100% {
+        top: 45%;
+		opacity: 1;
+	}
+}
+
+ion-item {
+    --color: #fff;
+    --background: none;
+    text-align: center;
+    font-size: 25px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+ion-slider{
+    width: 100%;
+    height: 100%;
+}
+
+ion-slide {
+    white-space: nowrap;
+    display: block;
+    height: auto;
+}
+
+.loginForm, .dateForm{
+    margin-top: 1rem;
+}
+
+.formBuilder{
+    padding: 20px;
+    text-align: center;
+}
+
+.btn:disabled{
+    --background: #f1f1f1;
+    --color: #801eb4;
+}
+
+.btn{
+    font-size: 15px;
+    --background: #fff;
+    --border-radius: 40px;
+    margin: 1rem auto;
+    line-height: 1rem;
+    --color: #801eb4;
+}
+
+.btnPrev{
+    margin-top: 2rem;
+    margin-right: 1rem;
+}
+
+.btnNext{
+    margin-top: 2rem;
+    margin-left: 1.5rem;
+}
+
+.bornDate{
+    margin: 0 auto;
+    --background: #801eb4;
+}
+
+.fIcon{
+    color: orchid;
+}
+.mIcon{
+    color: blue;
+}
+
+.tIcon{
+    color: rgb(166, 255, 0);
+}
+
+.genderBtn{
+    width: 70%;
+    display: block;
+}
+
+.logFooter{
+    position: absolute;
+    bottom: 1rem;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.logTxt{
+    color: orchid;
+}
