@@ -1,7 +1,11 @@
 <ion-content>
 
   <ng-container>
-    <div class="formBuilder">
+
+
+
+
+    <div class="formBuilder" id="regContainer">
 
       <ion-slides #signupSlider [options]="slideOpts">
 
@@ -32,7 +36,8 @@
             <ion-item lines="none">
               <ion-datetime mode="ios" color="dark" formControlName="date" value="1990" [max]="dateLimit"
                 displayFormat="DD / MMM / YYYY"
-                monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic" class="bornDate">
+                monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic" class="bornDate"
+                (ionChange)="dateAge()">
               </ion-datetime>
             </ion-item>
 
@@ -84,13 +89,13 @@
             <span></span>
           </div>
 
-          <ion-button class="btn genderBtn" (click)="interest($event)" id="males">
-            <ion-icon slot="start" name="male" class="mIcon" mode="ios" id="males"></ion-icon>
+          <ion-button class="btn genderBtn" (click)="interest($event)" id="male">
+            <ion-icon slot="start" name="male" class="mIcon" mode="ios" id="male"></ion-icon>
             Hombres
           </ion-button>
 
-          <ion-button class="btn genderBtn" (click)="interest($event)" id="females">
-            <ion-icon slot="start" name="female" class="fIcon" mode="ios" id="females"></ion-icon>
+          <ion-button class="btn genderBtn" (click)="interest($event)" id="female">
+            <ion-icon slot="start" name="female" class="fIcon" mode="ios" id="female"></ion-icon>
             Mujeres
           </ion-button>
 
@@ -100,6 +105,33 @@
           </ion-button>
 
 
+
+          <ion-button class="btn" (click)="prev()">
+            <ion-icon slot="start" name="arrow-back"></ion-icon>
+            Atrás
+          </ion-button>
+
+
+        </ion-slide>
+
+
+        <ion-slide>
+          <div class="headers">
+            <span>Quiero ser...</span><br>
+            <span></span>
+          </div>
+
+          <ion-button class="btn genderBtn" (click)="role($event)" id="companion">
+            <ion-icon slot="start" name="male" class="mIcon" mode="ios" id="companion"></ion-icon>
+            Acompañante
+          </ion-button>
+
+          <ion-button class="btn genderBtn" (click)="role($event)" id="companied">
+            <ion-icon slot="start" name="female" class="fIcon" mode="ios" id="companied"></ion-icon>
+            <span *ngIf="gen == 'male'" id="companied">Acompañado</span> 
+             <span *ngIf="gen == 'female'" id="companied">Acompañada</span> 
+             <span *ngIf="gen == 'trans'" id="companied">Acompañado/a</span> 
+          </ion-button>
 
           <ion-button class="btn" (click)="prev()">
             <ion-icon slot="start" name="arrow-back"></ion-icon>
@@ -140,13 +172,17 @@
   </ng-container>
 
 
-  <ng-container *ngIf="loginF == 1" >
+  <ng-container *ngIf="loginF == 1">
 
-    <div class="loginForm">
+    <div class="loginFormContent">
 
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" class="formContent">
 
-        <ion-item lines="none">
+        <div class="headers">
+          <span>Entra en tu cuenta de <b>Swipe</b></span>
+        </div>
+
+        <ion-item lines="none" style="margin-top: .5rem">
           <ion-input formControlName="email" type="text" placeholder="Correo Electrónico">
           </ion-input>
         </ion-item>
@@ -156,7 +192,8 @@
           </ion-input>
         </ion-item>
 
-        <ion-button class="btn" (click)="next()" [disabled]="!logFormG.valid" (click)="signin()">Iniciar Sesión</ion-button>
+        <ion-button class="btn" (click)="signin()" [disabled]="!loginForm.valid" (click)="signin()">Iniciar Sesión
+        </ion-button>
 
       </form>
 
@@ -169,7 +206,7 @@
   <div class="logFooter">
     <ion-label (click)="logForm()" *ngIf="loginF != 1">¿Ya tienes cuenta? <b class="logTxt">Inicia Sesión.</b>
     </ion-label>
-    <ion-label (click)="logForm()" *ngIf="loginF == 1">¿Todavía no tienes cuenta? <b class="logTxt">Regístrate.</b>
+    <ion-label (click)="regisForm()" *ngIf="loginF == 1">¿Todavía no tienes cuenta? <b class="logTxt">Regístrate.</b>
     </ion-label>
   </div>
 

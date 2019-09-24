@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
 
   @ViewChild('signupSlider', { static: true }) signupSlider;
   slideOpts = {
-    initialSlide: 0,
+    initialSlide: 4,
     slidesPerView: 1,
     autoHeight: true,
     allowTouchMove: false,
@@ -35,6 +35,7 @@ export class LoginPage implements OnInit {
   dateForm: FormGroup
   regForm: FormGroup
   loginForm: FormGroup
+  rol: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -42,13 +43,20 @@ export class LoginPage implements OnInit {
     private afs: AngularFirestore,
     private userSvc: UserService,
     private router: Router
-  ) { }
+  ) {
+
+
+
+  }
 
   ngOnInit() {
 
+    if (this.userSvc.isAuthenticated()) {
+      this.router.navigate(['/home'])
+    }
+
     this.dateLimit = new Date().getFullYear() - 18
 
-    console.log(this.dateLimit)
 
     this.nameForm = this.formBuilder.group({
       name: new FormControl('', Validators.compose([
@@ -108,21 +116,34 @@ export class LoginPage implements OnInit {
   gender(g) {
     this.signupSlider.slideNext()
     this.gen = g.target.id
-  } 
+  }
   interest(i) {
     this.signupSlider.slideNext()
     this.int = i.target.id
   }
 
+  role(r) {
+    this.signupSlider.slideNext()
+    this.rol = r.target.id
+  }
 
+  dateAge() {
+    var date = this.dateForm.get('date').value
+    console.log(new Date(date))
+  }
 
-  logForm(){
+  logForm() {
     this.loginF = 1
     document.getElementById('regContainer').style.display = "none"
   }
+  
+  regisForm(){
+    this.loginF = 0
+    document.getElementById('regContainer').style.display = "block"
+  }
 
 
-  async signup(){
+  async signup() {
 
     var name = this.nameForm.get('name').value
     var date = this.dateForm.get('date').value
@@ -133,19 +154,19 @@ export class LoginPage implements OnInit {
 
     try {
 
-      const res = await this.afAuth.auth.createUserWithEmailAndPassword( email, passwd)
-
-      const ref = Math.random().toString(36).substring(2, 16) + Math.random().toString(36).substring(2, 16).toUpperCase()
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, passwd)
 
       this.afs.doc(`users/${res.user.uid}`).set({
         name,
         email,
         verificated: false,
         date: new Date(),
-        age: date,
+        age: new Date(date),
         gender: gen,
         interest: int,
-        uid: ref
+        uid: res.user.uid,
+        role: this.rol,
+        diamonds: Number(300)
       }).then(() => {
         this.router.navigate(['/home']).finally(() => window.location.reload())
       })
@@ -162,7 +183,28 @@ export class LoginPage implements OnInit {
 
   }
 
-  signin(){}
+  async signin() {
+
+    var email = this.loginForm.get('email').value
+    var passwd = this.loginForm.get('passwd').value
+
+    try {
+
+      const res = await this.afAuth.auth.signInWithEmailAndPassword(email, passwd)
+
+      if (res.user) {
+        this.userSvc.setUser({
+          email,
+          uid: res.user.uid
+        })
+
+        this.router.navigate(['/home']).then(() => window.location.reload())
+      }
+    } catch (err) {
+      console.dir(err)
+    }
+
+  }
 
 
 }

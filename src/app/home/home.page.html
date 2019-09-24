@@ -1,14 +1,39 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header no-border mode="ios">
+  <ion-toolbar mode="ios">
     <ion-title>
-      Ionic Blank
+      Swipe
     </ion-title>
+    <ion-buttons slot="end" margin-end>
+      <ion-button mode="ios">
+        <svg slot="start" class="diamonds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
+        x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+        <polygon style="fill:#f0d4ff;" points="360.129,172.138 256,472.276 512,172.138 " />
+        <g>
+          <polygon style="fill:#e9c0ff;" points="105.931,39.724 0,172.138 151.871,172.138  " />
+          <polygon style="fill:#e9c0ff;" points="360.129,172.138 512,172.138 406.069,39.724  " />
+          <polygon style="fill:#e9c0ff;" points="360.129,172.138 256,39.724 151.871,172.138  " />
+        </g>
+        <polygon style="fill:#da9ff9;" points="256,39.724 105.931,39.724 151.871,172.138 " />
+        <polygon style="fill:#f0d4ff;" points="406.069,39.724 256,39.724 360.129,172.138 " />
+        <polygon style="fill:#da9ff9;" points="151.871,172.138 256,472.276 360.129,172.138 " />
+        <polygon style="fill:#c88de7;" points="0,172.138 256,472.276 151.871,172.138 " />
+      </svg>
+      <ion-label class="diamondsCount" slot="start">{{ diamonds }}</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+    <ion-button (click)="logout()">{{name}}</ion-button>
+
+
+      
+      
+
+
   </div>
+
+
 </ion-content>

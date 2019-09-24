@@ -24,3 +24,16 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+ion-content{
+    --background: #ad5389;
+    --background: -webkit-linear-gradient(to top, #511670, #ad5389); 
+    --background: linear-gradient(to top, #511670, #ad5389); 
+    --color: #fff;
+}
+
+ion-header ion-toolbar{
+    --background: #ad5389;
+    --color: #fff;
+}
