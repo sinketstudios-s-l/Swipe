@@ -1,0 +1,17 @@
+ion-content{
+    --background: #ad5389;
+    --background: -webkit-linear-gradient(to top, #511670, #ad5389); 
+    --background: linear-gradient(to top, #511670, #ad5389); 
+    --color: #fff;
+}
+
+ion-toolbar{
+    --background: #ad5389;
+    --color: #fff;
+}
+
+ion-list, ion-item{
+    --background: none;
+    background: none;
+    color: #fff;
+}

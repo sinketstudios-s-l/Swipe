@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, MenuController } from '@ionic/angular';
 import { DiamondsPage } from '../components/diamonds/diamonds.page';
 
 
@@ -23,7 +23,8 @@ export class HomePage implements OnInit {
     private userSvc: UserService,
     private router: Router,
     private afs: AngularFirestore,
-    private popOverCtrl: PopoverController
+    private popOverCtrl: PopoverController,
+    private menuCtrl: MenuController
   ) { }
 
 
@@ -60,6 +61,11 @@ export class HomePage implements OnInit {
     await diamonds.present()
   }
 
+
+  openMenu(){
+    this.menuCtrl.enable(true, 'main')
+    this.menuCtrl.open('main')
+  }
 
   logout() {
     this.userSvc.logout()
