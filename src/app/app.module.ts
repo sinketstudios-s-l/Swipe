@@ -16,6 +16,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
+import { DiamondsPageModule } from './components/diamonds/diamonds.module';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBS1w3WpecdzHzxlGnfFHBQ7Pj6yjhiwFc",
@@ -38,6 +39,7 @@ var firebaseConfig = {
     AngularFirestoreModule.enablePersistence(),
     AppRoutingModule,
     FormsModule,
+    DiamondsPageModule
   ],
   providers: [
     AuthService,

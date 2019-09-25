@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
 
   @ViewChild('signupSlider', { static: true }) signupSlider;
   slideOpts = {
-    initialSlide: 4,
+    initialSlide: 0,
     slidesPerView: 1,
     autoHeight: true,
     allowTouchMove: false,

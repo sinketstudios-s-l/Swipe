@@ -1,0 +1,41 @@
+.myDiamonds{
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 20px;
+}
+.diamondsCount{
+    margin-left: .5rem;
+}
+.diamondsText{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.diamondsIcon{
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+
+.rewardIcon{
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.diamondRicon{
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+}
+
+.videoRicon{
+    fill: #00000065;
+}
+
+.packFree{
+    border-bottom: 1px solid #f9f9f9;
+}

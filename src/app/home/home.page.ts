@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { PopoverController } from '@ionic/angular';
+import { DiamondsPage } from '../components/diamonds/diamonds.page';
 
 
 @Component({
@@ -20,7 +22,8 @@ export class HomePage implements OnInit {
   constructor(
     private userSvc: UserService,
     private router: Router,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private popOverCtrl: PopoverController
   ) { }
 
 
@@ -46,6 +49,15 @@ export class HomePage implements OnInit {
 
     }
 
+  }
+
+  async diamondsPop(){
+    const diamonds = await this.popOverCtrl.create({
+      component: DiamondsPage,
+      cssClass: 'diamondsPopOver',
+      translucent: true
+    })
+    await diamonds.present()
   }
 
 
