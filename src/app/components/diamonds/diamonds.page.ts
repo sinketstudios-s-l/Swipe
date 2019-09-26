@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from 'src/app/services/user.service';
+import { AdMobService } from 'src/app/services/ad-mob.service';
 
 @Component({
   selector: 'app-diamonds',
@@ -14,7 +15,8 @@ export class DiamondsPage implements OnInit {
 
   constructor(
     private afs: AngularFirestore,
-    private userSvc: UserService
+    private userSvc: UserService,
+    private adMobSvc: AdMobService
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,10 @@ export class DiamondsPage implements OnInit {
 
     console.log(id)
 
+  }
+
+  reward(){
+    this.adMobSvc.reward()
   }
 
 }

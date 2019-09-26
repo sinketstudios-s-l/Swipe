@@ -18,6 +18,10 @@ import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { DiamondsPageModule } from './components/diamonds/diamonds.module';
 
+// ADMOB FREE SERVICE
+import { AdMobService } from './services/ad-mob.service';
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
+
 var firebaseConfig = {
   apiKey: "AIzaSyBS1w3WpecdzHzxlGnfFHBQ7Pj6yjhiwFc",
   authDomain: "swipe-ss.firebaseapp.com",
@@ -39,11 +43,13 @@ var firebaseConfig = {
     AngularFirestoreModule.enablePersistence(),
     AppRoutingModule,
     FormsModule,
-    DiamondsPageModule
+    DiamondsPageModule,
   ],
   providers: [
     AuthService,
     UserService,
+    AdMobService,
+    AdMobFree,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
