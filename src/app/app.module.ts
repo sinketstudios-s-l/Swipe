@@ -22,6 +22,9 @@ import { DiamondsPageModule } from './components/diamonds/diamonds.module';
 import { AdMobService } from './services/ad-mob.service';
 import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
+// FIRE CLOUD MESSAGING
+import { FCM } from '@ionic-native/fcm/ngx';
+
 var firebaseConfig = {
   apiKey: "AIzaSyBS1w3WpecdzHzxlGnfFHBQ7Pj6yjhiwFc",
   authDomain: "swipe-ss.firebaseapp.com",
@@ -50,6 +53,7 @@ var firebaseConfig = {
     UserService,
     AdMobService,
     AdMobFree,
+    FCM,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

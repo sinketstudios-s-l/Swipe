@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PopoverController, MenuController } from '@ionic/angular';
+import { PopoverController, MenuController, Platform } from '@ionic/angular';
 import { DiamondsPage } from '../components/diamonds/diamonds.page';
+import { AdMobService } from '../services/ad-mob.service';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 @Component({
@@ -16,6 +18,12 @@ export class HomePage implements OnInit {
   mainUser
   subUser
 
+  mainProf
+  subProf
+  
+  profPic
+  profName
+
   name
   diamonds
   
@@ -24,7 +32,10 @@ export class HomePage implements OnInit {
     private router: Router,
     private afs: AngularFirestore,
     private popOverCtrl: PopoverController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private platform: Platform,
+    private adMobSvc: AdMobService,
+    private fcm: FCM
   ) { }
 
 
@@ -34,19 +45,44 @@ export class HomePage implements OnInit {
       this.router.navigate(['/login'])
     } else {
 
-      this.mainUser = this.afs.doc(`users/${this.userSvc.getUID()}`)
-      this.subUser = this.mainUser.valueChanges().subscribe(ev => {
-        this.name = ev.name
-        this.diamonds = ev.diamonds
+      this.platform.ready().then(() => {
+        this.adMobSvc.banner()
 
-        if(this.diamonds >= 1000 && this.diamonds <= 9999){
-          this.diamonds = Number(this.diamonds).toFixed(0).substr(0, 1) + '.' + Number(this.diamonds).toFixed(0).substr(1, 3)
-        }else if(this.diamonds >= 10000 && this.diamonds <= 99999){
-          this.diamonds = Number(this.diamonds).toFixed(0).substr(0, 2) + ' k'
-        } else if(this.diamonds >= 100000){
-          this.diamonds = Number(this.diamonds).toFixed(0).substr(0, 3) + ' k'
-        }
+        this.fcm.getToken().then(token => {
+          console.log("*============= TOKEN =============*")
+
+          console.log(token)
+
+          console.log("*=================================*")
+
+        });
+
+        // USER 
+        this.mainUser = this.afs.doc(`users/${this.userSvc.getUID()}`)
+        this.subUser = this.mainUser.valueChanges().subscribe(ev => {
+          this.name = ev.name
+          this.diamonds = ev.diamonds
+  
+          if(this.diamonds >= 1000 && this.diamonds <= 9999){
+            this.diamonds = Number(this.diamonds).toFixed(0).substr(0, 1) + '.' + Number(this.diamonds).toFixed(0).substr(1, 3)
+          }else if(this.diamonds >= 10000 && this.diamonds <= 99999){
+            this.diamonds = Number(this.diamonds).toFixed(0).substr(0, 2) + ' k'
+          } else if(this.diamonds >= 100000){
+            this.diamonds = Number(this.diamonds).toFixed(0).substr(0, 3) + ' k'
+          }
+        })
+
+        // END USER
+
+        // PROFILES
+
+        this.mainProf = this.afs.collection(`users`)
+        this.subProf = this.mainProf.valueChanges().subscribe(p => {
+          this.profName = p.name
+        })
+
       })
+
 
     }
 
