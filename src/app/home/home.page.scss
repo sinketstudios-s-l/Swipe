@@ -33,4 +33,13 @@ ion-col.companionRow{
 ion-card.companionCard{
     margin: 0;
     padding: 0;
+    --background: #fff !important;
+}
+
+.imgDiv {
+    width: 100px;
+    position: relative;
+    background: #511670;
+    -moz-box-shadow: inset 0 -10px 10px -10px #000000;
+    -webkit-box-shadow: inset 0 -10px 10px -10px #000000;
 }

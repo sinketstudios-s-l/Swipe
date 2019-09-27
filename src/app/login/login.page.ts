@@ -156,20 +156,23 @@ export class LoginPage implements OnInit {
 
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, passwd)
 
-      this.afs.doc(`users/${res.user.uid}`).set({
-        name,
-        email,
-        verificated: false,
-        date: new Date(),
-        age: new Date(date),
-        gender: gen,
-        interest: int,
-        uid: res.user.uid,
-        role: this.rol,
-        diamonds: Number(300)
-      }).then(() => {
-        this.router.navigate(['/home']).finally(() => window.location.reload())
-      })
+
+        this.afs.doc(`users/${res.user.uid}`).set({
+          name,
+          email,
+          verificated: false,
+          date: new Date(),
+          age: new Date(date),
+          gender: gen,
+          interest: int,
+          uid: res.user.uid,
+          role: this.rol,
+          diamonds: Number(300),
+          profilePic: ""
+        }).then(() => {
+          this.router.navigate(['/home']).finally(() => window.location.reload())
+        })
+
 
       this.userSvc.setUser({
         email,

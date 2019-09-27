@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import * as firebase from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +23,14 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private userSvc: UserService
   ) {
     this.initializeApp();
 
     firebase.auth().onAuthStateChanged(user => {
-      if(user){
+      if (user) {
+
         this.mainUser = this.afs.doc(`users/${user.uid}`)
         this.subUser = this.mainUser.valueChanges().subscribe(event => {
           this.userName = event.name
@@ -44,5 +47,9 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
-  
+
+
+  logout() {
+    this.userSvc.logout()
+  }
 }
