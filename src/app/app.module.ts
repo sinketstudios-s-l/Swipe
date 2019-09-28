@@ -24,6 +24,8 @@ import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
 // FIRE CLOUD MESSAGING
 import { FCM } from '@ionic-native/fcm/ngx';
+import { MenuPageModule } from './modals/menu/menu.module';
+import { ViewPageModule } from './modals/view/view.module';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBS1w3WpecdzHzxlGnfFHBQ7Pj6yjhiwFc",
@@ -47,6 +49,8 @@ var firebaseConfig = {
     AppRoutingModule,
     FormsModule,
     DiamondsPageModule,
+    MenuPageModule,
+    ViewPageModule
   ],
   providers: [
     AuthService,

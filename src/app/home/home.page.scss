@@ -36,10 +36,6 @@ ion-card.companionCard{
     --background: #fff !important;
 }
 
-.imgDiv {
-    width: 100px;
-    position: relative;
-    background: #511670;
-    -moz-box-shadow: inset 0 -10px 10px -10px #000000;
-    -webkit-box-shadow: inset 0 -10px 10px -10px #000000;
+svg.verificatedIcon{
+    fill: white;
 }

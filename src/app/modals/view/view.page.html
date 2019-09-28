@@ -1,0 +1,29 @@
+<ion-content>
+
+  <div class="toolbar">
+    <ion-button (click)="close()" fill="clear">
+      <ion-icon name="close" mode="md" color="light"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-slides class="slider" pager="true" [options]="sliderOpts">
+    <ion-slide>
+      <img class="img" [src]="img">
+      <div class="basicInfo">
+        <ion-item lines="none">
+          <ion-label slot="start">
+            <h2><b>{{name}}</b></h2>
+            <span>texto de prueba</span>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <img class="img" [src]="img">
+      <div class="basicInfo">
+
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -42,7 +42,8 @@ export class LoginPage implements OnInit {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private userSvc: UserService,
-    private router: Router
+    private router: Router,
+    private menuCtrl: MenuController
   ) {
 
 
@@ -50,6 +51,8 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+
+    this.menuCtrl.enable(false, 'main')
 
     if (this.userSvc.isAuthenticated()) {
       this.router.navigate(['/home'])

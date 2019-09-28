@@ -7,15 +7,31 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <ion-list>
+          <ion-list *ngIf="userRole == 'companion'">
+
+            
+            <ion-item lines="none" (click)="menu($event)" id="account">Mi Cuenta</ion-item>
+            <ion-item lines="none" (click)="menu($event)" id="settings">Configuración</ion-item>
+            <ion-item lines="none" (click)="menu($event)" id="help">Ayuda</ion-item>
+            <ion-item lines="none" (click)="logout()">
+             <ion-label>Logout</ion-label> 
+            </ion-item>
+          </ion-list>
+          <ion-list *ngIf="userRole == 'companied'">
+
             <ion-item lines="none" >Menu Item</ion-item>
-            <ion-item lines="none" >Menu Item</ion-item>
-            <ion-item lines="none" >Menu Item</ion-item>
+            <ion-item lines="none" >Ayuda</ion-item>
             <ion-item lines="none" >Menu Item</ion-item>
             <ion-item lines="none" >Menu Item</ion-item>
             <ion-item lines="none" (click)="logout()">Logout</ion-item>
           </ion-list>
         </ion-content>
+        <ion-footer>
+          <div class="footerMenu">
+            <span class="brandName">Sinket Studios, S.L</span> <br>
+            <span class="appVersion">Beta v.0.1.5a</span>
+          </div>
+        </ion-footer>
       </ion-menu>
 
   <ion-router-outlet main></ion-router-outlet>

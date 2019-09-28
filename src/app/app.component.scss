@@ -16,3 +16,17 @@ ion-list, ion-item{
     background: none;
     color: #fff;
 }
+
+
+.footerMenu{
+    background: #511670;
+    color: #ffffff49;
+    text-align: center;
+    padding: 5px;
+}
+.footerMenu .brandName{
+    font-weight: bold;
+}
+.footerMenu .appVersion{
+    font-size: 12px;
+}

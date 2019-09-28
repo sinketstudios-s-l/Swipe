@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import * as firebase from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './services/user.service';
+import { MenuPage } from './modals/menu/menu.page';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private afs: AngularFirestore,
-    private userSvc: UserService
+    private userSvc: UserService,
+    private modalCtrl: ModalController
   ) {
     this.initializeApp();
 
@@ -51,5 +53,17 @@ export class AppComponent {
 
   logout() {
     this.userSvc.logout()
+  }
+
+  async menu(e){
+    let id = e.target.id
+
+    const modal = await this.modalCtrl.create({
+      component: MenuPage,
+      componentProps: {
+        id: id
+      }
+    })
+    await modal.present()
   }
 }
