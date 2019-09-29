@@ -7,13 +7,13 @@ import { AdMobFree, AdMobFreeRewardVideo, AdMobFreeRewardVideoConfig, AdMobFreeB
 export class AdMobService {
 
   rewardVideoConfig: AdMobFreeRewardVideoConfig = {
-    isTesting: true,
+    isTesting: false,
     autoShow: true,
     id: "ca-app-pub-3993710682934611/1349825671"
   }
 
   bannerConfig: AdMobFreeBannerConfig = {
-    isTesting: true,
+    isTesting: false,
     autoShow:true,
     id: "ca-app-pub-3993710682934611/9224446268"
   }
@@ -43,6 +43,14 @@ export class AdMobService {
       console.log(ev)
     }).catch (err => console.log(err))
 
+  }
+
+  hideAd(){
+    this.adMob.banner.hide()
+  }
+
+  showAd(){
+    this.adMob.banner.show()
   }
 
 

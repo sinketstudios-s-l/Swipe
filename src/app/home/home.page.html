@@ -32,6 +32,10 @@
 </ion-header>
 
 <ion-content>
+    <div class="headers">
+      <h4 *ngIf="userRole == 'companied'">Acompañantes</h4>
+      <h4 *ngIf="userRole == 'companion'">Personas que buscan compañía.</h4>
+    </div>
     <ion-grid>
       <ion-row id="rowList">
         <!-- companion cards -->

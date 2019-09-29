@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, MenuController } from '@ionic/angular';
+import { IonSlides, MenuController, AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { AdMobService } from '../services/ad-mob.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginPage implements OnInit {
 
   };
   loginF = 0
-
+  loading = 0
   nombre
   dateNow
   dateLimit
@@ -42,17 +43,17 @@ export class LoginPage implements OnInit {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private userSvc: UserService,
+    private alertCtrl: AlertController,
     private router: Router,
-    private menuCtrl: MenuController
-  ) {
-
-
-
-  }
+    private menuCtrl: MenuController,
+    private adMobSvc: AdMobService
+  ) {}
 
   ngOnInit() {
 
     this.menuCtrl.enable(false, 'main')
+
+    this.adMobSvc.hideAd()
 
     if (this.userSvc.isAuthenticated()) {
       this.router.navigate(['/home'])
@@ -145,8 +146,18 @@ export class LoginPage implements OnInit {
     document.getElementById('regContainer').style.display = "block"
   }
 
+  async presentAlert(header: string, message: string){
+    const alert = await this.alertCtrl.create({
+      header: header,
+      message: message,
+      buttons: ['Cerrar']
+    })
+    await alert.present()
+  }
 
   async signup() {
+
+    this.loading = 1
 
     var name = this.nameForm.get('name').value
     var date = this.dateForm.get('date').value
@@ -158,7 +169,6 @@ export class LoginPage implements OnInit {
     try {
 
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, passwd)
-
 
         this.afs.doc(`users/${res.user.uid}`).set({
           name,
@@ -173,7 +183,7 @@ export class LoginPage implements OnInit {
           diamonds: Number(300),
           profilePic: ""
         }).then(() => {
-          this.router.navigate(['/home']).finally(() => window.location.reload())
+          this.router.navigate(['/home']).then(() => window.location.reload()).finally(() => this.loading = 0)
         })
 
 
@@ -185,16 +195,16 @@ export class LoginPage implements OnInit {
     } catch {
 
     }
-
-
   }
 
   async signin() {
 
+    
     var email = this.loginForm.get('email').value
     var passwd = this.loginForm.get('passwd').value
-
+    
     try {
+      this.loading = 1
 
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email, passwd)
 
@@ -204,9 +214,19 @@ export class LoginPage implements OnInit {
           uid: res.user.uid
         })
 
-        this.router.navigate(['/home']).then(() => window.location.reload())
+        this.router.navigate(['/home']).then(() => window.location.reload()).finally(() => this.loading = 0)
       }
     } catch (err) {
+      
+      if(err.code == "auth/user-not-found"){
+
+        this.presentAlert('¡Oops! Algo ha salido mal', 'El Usuario con el correo: ' + email + ' no existe. Inténtalo de nuevo.')
+        console.log('user not found')
+      } else if(err.code == "auth/wrong-password"){
+        this.presentAlert('¡Vaya! Algo ha salido mal', 'La contraseña no es correcta. Inténtalo de nuevo.')
+
+        console.log('wrong pass')
+      }
       console.dir(err)
     }
 

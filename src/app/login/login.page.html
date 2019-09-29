@@ -142,6 +142,8 @@
         </ion-slide>
 
         <ion-slide>
+        <ion-spinner *ngIf="loading == 1" name="crescent"></ion-spinner>
+
           <div class="headers">
             <span><b style="text-transform: capitalize;">{{nombre}}</b>, ¡Ya casi estamos!</span><br>
             <span>¿Cuál es tu Correo?</span>
@@ -177,6 +179,8 @@
     <div class="loginFormContent">
 
       <form [formGroup]="loginForm" class="formContent">
+
+        <ion-spinner *ngIf="loading == 1" name="crescent"></ion-spinner>
 
         <div class="headers">
           <span>Entra en tu cuenta de <b>Swipe</b></span>

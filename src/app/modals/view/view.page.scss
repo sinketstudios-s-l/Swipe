@@ -30,9 +30,9 @@ ion-content{
 
 .slider ion-slide img {
     height: 100%;
-    width: 100%;
     object-fit: cover;
     object-position: center;
+    border-radius: 10px 10px 0 0;
 }
 
 .basicInfo{
