@@ -30,6 +30,7 @@ ion-content{
 
 .slider ion-slide img {
     height: 100%;
+    max-width: 110%;
     object-fit: cover;
     object-position: center;
     border-radius: 10px 10px 0 0;
@@ -54,4 +55,34 @@ ion-content{
     --color: #ffffff;
     --background: transparent;
 
+}
+
+.detailedInfo{
+    position: absolute;
+    top: 3rem;
+    width: 100%;
+    height: 60px;
+    padding: 20px;
+    padding-bottom: 5rem;
+    z-index: 1001;
+    text-align: left;
+    color: #ffffff;
+
+}
+
+.eliteIcon{
+    fill: yellow;
+    vertical-align: top;
+    margin-left: 5px;
+}
+
+.verificatedIcon{
+    fill:white; 
+    vertical-align: middle; 
+    margin-left: 5px;
+}
+
+
+.blur{
+   filter: blur(10px) brightness(50%) drop-shadow(2px 4px 6px black);
 }

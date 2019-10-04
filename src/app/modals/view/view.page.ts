@@ -20,6 +20,9 @@ export class ViewPage implements OnInit {
   age
   role
   verificated
+  elite
+  desc
+  hobbies = []
 
   sliderOpts = {
     direction: "vertical",
@@ -55,8 +58,9 @@ export class ViewPage implements OnInit {
       this.name = ev.name
       this.role = ev.role
       this.verificated = ev.verificated
-
-
+      this.elite = ev.elite
+      this.desc = ev.desc
+      this.hobbies = ev.hobbies
 
       const afsTMSP = ev.age.toDate().getFullYear()
       const now = new Date().getFullYear()

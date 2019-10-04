@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, ModalController } from '@ionic/angular';
+import { Platform, ModalController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -8,6 +8,7 @@ import * as firebase from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './services/user.service';
 import { MenuPage } from './modals/menu/menu.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,9 @@ export class AppComponent {
     private statusBar: StatusBar,
     private afs: AngularFirestore,
     private userSvc: UserService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private router: Router,
+    private menuCtrl: MenuController
   ) {
     this.initializeApp();
 
@@ -54,7 +57,9 @@ export class AppComponent {
   logout() {
     this.userSvc.logout()
   }
-
+  chat(){
+    this.router.navigate(['chats']).finally(() => this.menuCtrl.close())
+  }
   async menu(e){
     let id = e.target.id
 

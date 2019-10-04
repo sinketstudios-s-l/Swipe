@@ -12,6 +12,7 @@
             
             <ion-item lines="none" (click)="menu($event)" id="account">Mi Cuenta</ion-item>
             <ion-item lines="none" (click)="menu($event)" id="settings">Configuración</ion-item>
+            <ion-item lines="none" (click)="chat()">Chats</ion-item>
             <ion-item lines="none" (click)="menu($event)" id="help">Ayuda</ion-item>
             <ion-item lines="none" (click)="logout()">
              <ion-label>Logout</ion-label> 
@@ -23,6 +24,10 @@
             <ion-item lines="none" >Ayuda</ion-item>
             <ion-item lines="none" >Menu Item</ion-item>
             <ion-item lines="none" >Menu Item</ion-item>
+            <ion-item lines="none" (click)="chat()">
+              Chats
+              <ion-badge slot="end">22</ion-badge>
+            </ion-item>
             <ion-item lines="none" (click)="logout()">Logout</ion-item>
           </ion-list>
         </ion-content>

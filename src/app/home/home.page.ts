@@ -215,6 +215,8 @@ export class HomePage implements OnInit {
     cardContent.style.background = "linear-gradient(to top, #000000bb, #00000000)"
     name.style.margin = "0"
     desc.style.margin = "0"
+    desc.style.whiteSpace = "nowrap"
+
 
     img.src = doc.data().profilePic
     
@@ -229,7 +231,7 @@ export class HomePage implements OnInit {
       name.textContent = doc.data().name+ ', ' + age
     }
 
-    desc.textContent = "texto de prueba"
+    desc.textContent = doc.data().desc
     card.addEventListener('click', ev => {
         this.modalView(ev)
     })

@@ -43,7 +43,7 @@ export class DiamondsPage implements OnInit {
   }
 
   reward(){
-    this.adMobSvc.reward()
+    this.adMobSvc.reward(Number(this.diamonds))
   }
 
 }
