@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
 
   @ViewChild('signupSlider', { static: true }) signupSlider;
   slideOpts = {
-    initialSlide: 0,
+    initialSlide: 5,
     slidesPerView: 1,
     autoHeight: true,
     allowTouchMove: false,
@@ -32,10 +32,13 @@ export class LoginPage implements OnInit {
   gen
   int
 
+  descL = 0
+
   nameForm: FormGroup
   dateForm: FormGroup
   regForm: FormGroup
   loginForm: FormGroup
+  aboutForm: FormGroup
   rol: any;
 
   constructor(
@@ -98,8 +101,16 @@ export class LoginPage implements OnInit {
       ])),
       passwd: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(4),
         Validators.maxLength(25)
+      ]))
+    })
+
+    this.aboutForm = this.formBuilder.group({
+      desc: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(50),
+        Validators.maxLength(250)
       ]))
     })
   }
@@ -146,6 +157,12 @@ export class LoginPage implements OnInit {
     document.getElementById('regContainer').style.display = "block"
   }
 
+  wordsCount(event){
+
+    this.descL = event.detail.value.length
+
+  }
+
   async presentAlert(header: string, message: string){
     const alert = await this.alertCtrl.create({
       header: header,
@@ -165,6 +182,7 @@ export class LoginPage implements OnInit {
     var int = this.int
     var email = this.regForm.get('email').value
     var passwd = this.regForm.get('passwd').value
+    var desc = this.aboutForm.get('desc').value
 
     try {
 
@@ -181,7 +199,8 @@ export class LoginPage implements OnInit {
           uid: res.user.uid,
           role: this.rol,
           diamonds: Number(300),
-          profilePic: ""
+          profilePic: "",
+          desc
         }).then(() => {
           this.router.navigate(['/home']).then(() => window.location.reload()).finally(() => this.loading = 0)
         })

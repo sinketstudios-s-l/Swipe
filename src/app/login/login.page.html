@@ -128,9 +128,9 @@
 
           <ion-button class="btn genderBtn" (click)="role($event)" id="companied">
             <ion-icon slot="start" name="female" class="fIcon" mode="ios" id="companied"></ion-icon>
-            <span *ngIf="gen == 'male'" id="companied">Acompañado</span> 
-             <span *ngIf="gen == 'female'" id="companied">Acompañada</span> 
-             <span *ngIf="gen == 'trans'" id="companied">Acompañado/a</span> 
+            <span *ngIf="gen == 'male'" id="companied">Acompañado</span>
+            <span *ngIf="gen == 'female'" id="companied">Acompañada</span>
+            <span *ngIf="gen == 'trans'" id="companied">Acompañado/a</span>
           </ion-button>
 
           <ion-button class="btn" (click)="prev()">
@@ -142,7 +142,31 @@
         </ion-slide>
 
         <ion-slide>
-        <ion-spinner *ngIf="loading == 1" name="crescent"></ion-spinner>
+          <div class="headers">
+            <span>Cuéntanos algo sobre ti:</span><br>
+            <span></span>
+          </div>
+          <form [formGroup]="aboutForm">
+            <ion-textarea (ionChange)="wordsCount($event)" formControlName="desc" rows="6" cols="20" placeholder="Aficiones, gustos, detalles.."></ion-textarea>
+            <ion-label>
+              <p style="color: #fff;opacity: .35;">{{descL}}/250</p>
+            </ion-label>
+          </form>
+          <ion-button class="btn btnPrev" (click)="prev()">
+            <ion-icon slot="start" name="arrow-back"></ion-icon>
+            Atrás
+          </ion-button>
+
+          <ion-button class="btn btnNext" (click)="next()" [disabled]="!aboutForm.valid">
+            Siguiente
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+
+
+        </ion-slide>
+
+        <ion-slide>
+          <ion-spinner *ngIf="loading == 1" name="crescent"></ion-spinner>
 
           <div class="headers">
             <span><b style="text-transform: capitalize;">{{nombre}}</b>, ¡Ya casi estamos!</span><br>
