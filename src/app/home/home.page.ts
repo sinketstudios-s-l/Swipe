@@ -36,6 +36,7 @@ export class HomePage implements OnInit {
   compViews = 0
 
   id
+  token:string
   constructor(
     private userSvc: UserService,
     private router: Router,
@@ -60,15 +61,6 @@ export class HomePage implements OnInit {
       this.platform.ready().then(() => {
         this.adMobSvc.banner()
 
-        this.fcm.getToken().then(token => {
-
-          console.log("*============= TOKEN =============*")
-
-          console.log(token)
-
-          console.log("*=================================*")
-
-        });
 
         // USER 
         this.mainUser = this.afs.doc(`users/${this.userSvc.getUID()}`)
@@ -77,7 +69,14 @@ export class HomePage implements OnInit {
           this.diamonds = ev.diamonds
           this.userInterest = ev.interest
           this.userRole = ev.role
+          this.token = ev.token
 
+          if(this.token == "" || this.token == null){
+              const token = localStorage.getItem('token')
+              this.afs.doc(`users/${this.userSvc.getUID()}`).update({
+                token: token
+              })
+          }
 
           if (this.userInterest === 'female' && this.userRole == 'companied') {
             this.afs.collection('users').ref.where('role', "==", "companion")

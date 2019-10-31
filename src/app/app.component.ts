@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './services/user.service';
 import { MenuPage } from './modals/menu/menu.page';
 import { Router } from '@angular/router';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,8 @@ export class AppComponent {
 
   mainUser
   subUser
+
+  token
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -29,9 +32,14 @@ export class AppComponent {
     private userSvc: UserService,
     private modalCtrl: ModalController,
     private router: Router,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private fcm: FCM
   ) {
     this.initializeApp();
+
+    fcm.getToken().then(token => this.token = token)
+
+    localStorage.setItem('token', this.token)
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

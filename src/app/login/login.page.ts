@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { AdMobService } from '../services/ad-mob.service';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
 
   @ViewChild('signupSlider', { static: true }) signupSlider;
   slideOpts = {
-    initialSlide: 5,
+    initialSlide: 0,
     slidesPerView: 1,
     autoHeight: true,
     allowTouchMove: false,
@@ -41,6 +42,8 @@ export class LoginPage implements OnInit {
   aboutForm: FormGroup
   rol: any;
 
+  token: string
+
   constructor(
     public formBuilder: FormBuilder,
     private afAuth: AngularFireAuth,
@@ -49,8 +52,9 @@ export class LoginPage implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private menuCtrl: MenuController,
-    private adMobSvc: AdMobService
-  ) {}
+    private adMobSvc: AdMobService,
+    private fcm: FCM
+  ) { }
 
   ngOnInit() {
 
@@ -62,6 +66,8 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/home'])
     }
 
+   this.getFCMToken()
+    
     this.dateLimit = new Date().getFullYear() - 18
 
 
@@ -115,6 +121,11 @@ export class LoginPage implements OnInit {
     })
   }
 
+  async getFCMToken() {
+    await this.fcm.getToken().then(token => {
+      this.token = token
+    })
+  }
 
   next() {
     this.nombre = this.nameForm.get('name').value
@@ -151,19 +162,19 @@ export class LoginPage implements OnInit {
     this.loginF = 1
     document.getElementById('regContainer').style.display = "none"
   }
-  
-  regisForm(){
+
+  regisForm() {
     this.loginF = 0
     document.getElementById('regContainer').style.display = "block"
   }
 
-  wordsCount(event){
+  wordsCount(event) {
 
     this.descL = event.detail.value.length
 
   }
 
-  async presentAlert(header: string, message: string){
+  async presentAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
       header: header,
       message: message,
@@ -184,26 +195,33 @@ export class LoginPage implements OnInit {
     var passwd = this.regForm.get('passwd').value
     var desc = this.aboutForm.get('desc').value
 
+
     try {
 
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, passwd)
 
-        this.afs.doc(`users/${res.user.uid}`).set({
-          name,
-          email,
-          verificated: false,
-          date: new Date(),
-          age: new Date(date),
-          gender: gen,
-          interest: int,
-          uid: res.user.uid,
-          role: this.rol,
-          diamonds: Number(300),
-          profilePic: "",
-          desc
-        }).then(() => {
-          this.router.navigate(['/home']).then(() => window.location.reload()).finally(() => this.loading = 0)
-        })
+      this.afs.doc(`users/${res.user.uid}`).set({
+        name,
+        email,
+        verificated: false,
+        date: new Date(),
+        age: new Date(date),
+        gender: gen,
+        interest: int,
+        uid: res.user.uid,
+        role: this.rol,
+        diamonds: Number(300),
+        profilePic: "",
+        desc,
+        token: this.token
+      }).then(() => {
+        this.router.navigate(['/home']).then(() => window.location.reload()).finally(() => this.loading = 0)
+      }).catch(err => {
+
+        console.dir(err)
+        console.log(err)
+
+      })
 
 
       this.userSvc.setUser({
@@ -211,17 +229,22 @@ export class LoginPage implements OnInit {
         uid: res.user.uid
       })
 
-    } catch {
+    } catch (err){
+
+      console.dir(err)
+      console.log(err)
 
     }
+
+    
   }
 
   async signin() {
 
-    
+
     var email = this.loginForm.get('email').value
     var passwd = this.loginForm.get('passwd').value
-    
+
     try {
       this.loading = 1
 
@@ -236,12 +259,12 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/home']).then(() => window.location.reload()).finally(() => this.loading = 0)
       }
     } catch (err) {
-      
-      if(err.code == "auth/user-not-found"){
+
+      if (err.code == "auth/user-not-found") {
 
         this.presentAlert('¡Oops! Algo ha salido mal', 'El Usuario con el correo: ' + email + ' no existe. Inténtalo de nuevo.')
         console.log('user not found')
-      } else if(err.code == "auth/wrong-password"){
+      } else if (err.code == "auth/wrong-password") {
         this.presentAlert('¡Vaya! Algo ha salido mal', 'La contraseña no es correcta. Inténtalo de nuevo.')
 
         console.log('wrong pass')
